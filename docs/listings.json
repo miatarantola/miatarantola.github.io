@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/Gradient Descent Blog Post/Gradient_Descent_blog.html",
       "/posts/Perceptron Blog Post/Perceptron Blog.html",
       "/posts/example-blog-post/index.html"
     ]
