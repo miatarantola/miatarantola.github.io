@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/Linear Regression Blog Post/Linear Regression Blog nb.html",
       "/posts/Classifying Palmer Penguins/Penguin Blog Post.html",
       "/posts/Gradient Descent Blog Post/Gradient_Descent_blog.html",
       "/posts/Perceptron Blog Post/Perceptron Blog.html",
