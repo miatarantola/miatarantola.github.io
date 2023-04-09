@@ -216,6 +216,7 @@ background: img/landscape.png;
 
 <section id="mia-tarantola" class="level1">
 <h1>Mia Tarantola</h1>
+<p><strong><a href="https://github.com/miatarantola/miatarantola.github.io/blob/main/posts/Linear%20Regression%20Blog%20Post/LR.py">link to source code</a></strong></p>
 </section>
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
@@ -298,7 +299,7 @@ background: img/landscape.png;
 <p><img src="Linear%20Regression%20Blog%20nb_files/figure-html/cell-7-output-1.png" class="img-fluid"></p>
 </div>
 </div>
-<p>We can see that this model produces a pretty good fit forour data. It roughly follows the positive linear pattern of our data, but let’s look at the accuracy to get a better idea of performance</p>
+<p>We can see that this model produces a pretty good fit forour data. It roughly follows the positive linear pattern of our data, but let’s look at the scores to get a better idea of performance</p>
 <div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Training score = </span><span class="sc">{</span>LR_analytic<span class="sc">.</span>score(pad(X_train),y_train)<span class="sc">.</span><span class="bu">round</span>(<span class="dv">4</span>)<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Validation score = </span><span class="sc">{</span>LR_analytic<span class="sc">.</span>score(pad(X_val),y_val)<span class="sc">.</span><span class="bu">round</span>(<span class="dv">4</span>)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -323,7 +324,7 @@ Validation score = 0.5491</code></pre>
 <p><img src="Linear%20Regression%20Blog%20nb_files/figure-html/cell-10-output-1.png" class="img-fluid"></p>
 </div>
 </div>
-<p>once again we can see that model does a good job predicting as the resulting line follows the positive linear pattern of the training data. Let’s look at the accuracy</p>
+<p>once again we can see that model does a good job predicting as the resulting line follows the positive linear pattern of the training data. Let’s look at the scores</p>
 <div class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Training score = </span><span class="sc">{</span>LR_gradient<span class="sc">.</span>score(pad(X_train),y_train)<span class="sc">.</span><span class="bu">round</span>(<span class="dv">4</span>)<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Validation score = </span><span class="sc">{</span>LR_gradient<span class="sc">.</span>score(pad(X_val),y_val)<span class="sc">.</span><span class="bu">round</span>(<span class="dv">4</span>)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -340,7 +341,7 @@ Validation score = 0.5491</code></pre>
 <p><img src="Linear%20Regression%20Blog%20nb_files/figure-html/cell-12-output-1.png" class="img-fluid"></p>
 </div>
 </div>
-<p>As expected, we see that our model started off with low accuracy, but quickly achieve a higher accuracy!</p>
+<p>As expected, we see that our model started off with low accuracy, but quickly achieve a higher accuracy! This is to be expected as linear regression models often do well just after one iteration.</p>
 </section>
 <section id="experiments" class="level2">
 <h2 class="anchored" data-anchor-id="experiments">Experiments</h2>

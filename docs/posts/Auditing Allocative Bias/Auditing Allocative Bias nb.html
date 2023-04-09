@@ -729,7 +729,53 @@ Name: label, dtype: float64</code></pre>
 <p><img src="Auditing%20Allocative%20Bias%20nb_files/figure-html/cell-13-output-1.png" class="img-fluid"></p>
 </div>
 </div>
-<p>It seems like white and asians are the groups with the highest proportion of individuals that have a target label of 1 within both genders</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Group</th>
+<th>RAC1P</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1: male</td>
+<td>1: White alone</td>
+</tr>
+<tr class="even">
+<td>2: female</td>
+<td>2: Black or African American alone</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>3: American Indian alone</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>4: Alaska Native alone</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>5: American Indian, Alaska Native alone</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>6: Asian alone</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>7: Native Hawaiian and Other Pacific Islander alone</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>8: Some other race alone</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>9: Two or More Races</td>
+</tr>
+</tbody>
+</table>
+<p>We are looking to see the breakdown of individuals who have a target label of 1 (meaning they have an income &gt;=$50,000) given their race and gender. We can use the mean as our metric because our target label is binary. So, the mean is the proportion of labels with the value 1. It seems like white and asians are the groups with the highest proportion of individuals that have a target label of 1 within both genders</p>
 <div class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>means <span class="op">=</span> df.groupby([<span class="st">"group"</span>,<span class="st">"DIS"</span>])[<span class="st">"label"</span>].mean().reset_index(name <span class="op">=</span> <span class="st">"proportion of individuals that have target label of 1"</span>)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> sns.barplot(data <span class="op">=</span> means, x <span class="op">=</span> <span class="st">"group"</span>, y <span class="op">=</span> <span class="st">"proportion of individuals that have target label of 1"</span>, hue <span class="op">=</span> <span class="st">"DIS"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -785,12 +831,14 @@ Name: label, dtype: float64</code></pre>
 <hr>
 <section id="overall-metrics" class="level3">
 <h3 class="anchored" data-anchor-id="overall-metrics">Overall Metrics</h3>
+<p>The overall accuracy of the model represents the percentage of times that it will correctly predict the target label. So, we are comparing the correct labels to the target labels and taking the mean. Because our label is binary we can take the mean of our equivalence array as the number of times 1 appear (signifying the labels match) is the mean</p>
 <div class="cell" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The overall accuracy of this model is: "</span> <span class="op">+</span> <span class="bu">str</span>((y_hat<span class="op">==</span>y_test).mean().<span class="bu">round</span>(<span class="dv">4</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>The overall accuracy of this model is: 0.822</code></pre>
 </div>
 </div>
+<p>To find the PPV of our model we first need to calculate the number of true positives and false positives. To do so, we compare the predicted labels to the test labels. If the predicted label is 1 and the acutal label is 1, then that is a true positive. If the predicted label is 1 and the true label is 0 that is a false positive.</p>
 <div class="cell" data-execution_count="25">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>TP <span class="op">=</span> <span class="bu">len</span>((np.where((y_hat<span class="op">==</span><span class="dv">1</span>) <span class="op">&amp;</span> (y_test<span class="op">==</span><span class="dv">1</span>))[<span class="dv">0</span>]))</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>FP <span class="op">=</span> <span class="bu">len</span>((np.where((y_hat<span class="op">==</span><span class="dv">1</span>) <span class="op">&amp;</span> (y_test<span class="op">==</span><span class="dv">0</span>))[<span class="dv">0</span>]))</span>
@@ -800,6 +848,7 @@ Name: label, dtype: float64</code></pre>
 <pre><code>The positive predictive value of this model is: 0.7092</code></pre>
 </div>
 </div>
+<p>The FPR represents the rate at which a test label of 0 is incorrectly predicted to be 1. THE FNR represents the rate at which a test label of 1 is incorrectly predicted to be 0.</p>
 <div class="cell" data-execution_count="26">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>conf_matrix <span class="op">=</span> confusion_matrix(y_test,y_hat, normalize <span class="op">=</span> <span class="st">'true'</span>)</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"FPR = "</span> <span class="op">+</span> <span class="bu">str</span>(conf_matrix[<span class="dv">0</span>][<span class="dv">1</span>]))</span>
@@ -814,6 +863,7 @@ FNR = 0.31835419036784224</code></pre>
 </section>
 <section id="by-group-measures" class="level2">
 <h2 class="anchored" data-anchor-id="by-group-measures">By Group Measures</h2>
+<p>Now we will compare the accuracy of our model for individual groups. So we filter by gender</p>
 <div class="cell" data-execution_count="28">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The accuracy for male individuals is "</span> <span class="op">+</span> <span class="bu">str</span>((y_hat<span class="op">==</span>y_test)[group_test<span class="op">==</span><span class="dv">1</span>].mean().<span class="bu">round</span>(<span class="dv">4</span>)))</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The accuracy for female individuals is "</span> <span class="op">+</span> <span class="bu">str</span>((y_hat<span class="op">==</span>y_test)[group_test<span class="op">==</span><span class="dv">2</span>].mean().<span class="bu">round</span>(<span class="dv">4</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -822,6 +872,7 @@ FNR = 0.31835419036784224</code></pre>
 The accuracy for female individuals is 0.8256</code></pre>
 </div>
 </div>
+<p>Now we will copmare some of the accuracy metrics such as the false positive rate and the false negative rate. They are about equal for both genders which is generally a good sign</p>
 <div class="cell" data-execution_count="38">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>conf_matrix_male_norm <span class="op">=</span> confusion_matrix(y_test[group_test<span class="op">==</span><span class="dv">1</span>],y_hat[group_test<span class="op">==</span><span class="dv">1</span>], normalize <span class="op">=</span> <span class="st">'true'</span>)</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"FPR for male individuals = "</span> <span class="op">+</span> <span class="bu">str</span>(conf_matrix_male_norm[<span class="dv">0</span>][<span class="dv">1</span>]))</span>
@@ -841,7 +892,7 @@ FNR for female individuals = 0.3088572739788894</code></pre>
 </section>
 <section id="bias-measures" class="level2">
 <h2 class="anchored" data-anchor-id="bias-measures">Bias Measures</h2>
-<p>Calibration means that the fraction of predicted people to have an income &gt;= $$$50,000 who actually had an income &gt;=$50,000 is the same across all groups</p>
+<p><strong>Calibration</strong> means that the fraction of predicted people to have an income &gt;= $$$50,000 who actually had an income &gt;=$50,000 is the same across all groups. So we will calculate this metric for both genders. This metric can be calculated by dividing the number of true positives by the total number of predicted positives.</p>
 <div class="cell" data-execution_count="59">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>conf_matrix_male <span class="op">=</span> confusion_matrix(y_test[group_test<span class="op">==</span><span class="dv">1</span>],y_hat[group_test<span class="op">==</span><span class="dv">1</span>])</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>male_calibration <span class="op">=</span> confusion_matrix(y_test[group_test<span class="op">==</span><span class="dv">1</span>],y_hat[group_test<span class="op">==</span><span class="dv">1</span>])[<span class="dv">0</span>][<span class="dv">0</span>]<span class="op">/</span>(confusion_matrix(y_test[group_test<span class="op">==</span><span class="dv">1</span>],y_hat[group_test<span class="op">==</span><span class="dv">1</span>])[<span class="dv">0</span>].<span class="bu">sum</span>())</span>
@@ -857,8 +908,8 @@ The fraction offe males predicted to have an income &gt;=$50000 who actually had
 </div>
 </div>
 <p>I would say that the model is calibrated as the proportions for each group are roughly the same.</p>
-<p>A model satisfies error rate balance if the false positive and false negative rates are equal across groups. Looking at the previously calculated FPR anf FNR, I would say that this model satidfies error rate balance. The FPR for both groups is rounghly 12% and the FNR for both groups is roughly 31%.</p>
-<p>A model satisifes statistical parity if the proportion of individuals classified as having an income &gt;=$50000 is the same for each group.</p>
+<p>A model satisfies <strong>error rate balance</strong> if the false positive and false negative rates are equal across groups. Looking at the previously calculated FPR anf FNR, I would say that this model satidfies error rate balance. The FPR for both groups is rounghly 12% and the FNR for both groups is roughly 31%.</p>
+<p>A model satisifes <strong>statistical parity</strong> if the proportion of individuals classified as having an income &gt;=$50000 is the same for each group. So we compare the total number of predicted positives.</p>
 <div class="cell" data-execution_count="58">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The proportion of males classified as having an income greater than $50,000 is "</span> <span class="op">+</span> <span class="bu">str</span>((confusion_matrix(y_test[group_test<span class="op">==</span><span class="dv">1</span>],y_hat[group_test<span class="op">==</span><span class="dv">1</span>])[<span class="dv">0</span>].<span class="bu">sum</span>())<span class="op">/</span><span class="dv">34377</span>))</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The proportion of females classified as having an income greater than $50,000 is "</span> <span class="op">+</span> <span class="bu">str</span>((confusion_matrix(y_test[group_test<span class="op">==</span><span class="dv">2</span>],y_hat[group_test<span class="op">==</span><span class="dv">2</span>])[<span class="dv">0</span>].<span class="bu">sum</span>())<span class="op">/</span><span class="dv">36491</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
