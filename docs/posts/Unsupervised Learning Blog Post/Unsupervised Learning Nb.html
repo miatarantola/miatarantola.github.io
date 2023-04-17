@@ -6,8 +6,11 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Mia Tarantola">
+<meta name="dcterms.date" content="2023-04-16">
+<meta name="description" content="A blog post relating to our talk with Timnit Gebru">
 
-<title>My Awesome CSCI 0451 Blog – unsupervised-learning-nb</title>
+<title>My Awesome CSCI 0451 Blog - Unsupervised Learning</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -169,7 +172,39 @@ background: img/landscape.png;
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Unsupervised Learning</h1>
+                  <div>
+        <div class="description">
+          A blog post relating to our talk with Timnit Gebru
+        </div>
+      </div>
+                </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Mia Tarantola </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">April 16, 2023</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     
@@ -178,11 +213,17 @@ background: img/landscape.png;
 
 
 
+
 <section id="mia-tarantola---unsupervised-learning" class="level1">
 <h1>Mia Tarantola - Unsupervised Learning</h1>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>This is in an optional blog post that focuses on using linear algebra for unsupervised learning. I chose to focus on the first dection : Image compression with Singular value decomposition.</p>
+<p>SVD for a real matrix <span class="math inline">\(A \in R^{mxn}\)</span> is <span class="math display">\[A = UDV^{T}\]</span> where <span class="math inline">\(D \in R^{mxn}\)</span> has non zero entries and where <span class="math inline">\(U \in R^{mxm}\)</span> and <span class="math inline">\(V \in R^{nxn}\)</span> are orthogonal matrices.</p>
+</section>
 <section id="image-prep" class="level2">
 <h2 class="anchored" data-anchor-id="image-prep">Image Prep</h2>
-<div class="cell" data-execution_count="10">
+<div class="cell" data-execution_count="115">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> pyplot <span class="im">as</span> plt</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> PIL</span>
@@ -191,10 +232,12 @@ background: img/landscape.png;
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> read_image(url):</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.array(PIL.Image.<span class="bu">open</span>(urllib.request.urlopen(url)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>Here we will read in our image, my dog :)</p>
 <div class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">"https://i.imgur.com/b2Xy4Et.jpeg"</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>img <span class="op">=</span> read_image(url)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>Next, we will convert our RGB image into greyscale. Let’s visualize this:</p>
 <div class="cell" data-execution_count="23">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>fig, axarr <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize <span class="op">=</span> (<span class="dv">7</span>, <span class="dv">3</span>))</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -214,9 +257,11 @@ background: img/landscape.png;
 <pre><code>[Text(0.5, 1.0, 'greyscale')]</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="Unsupervised%20Learning%20Nb_files/figure-html/cell-5-output-2.png" class="img-fluid"></p>
+<p><img src="Unsupervised%20Learning%20Nb_files/figure-html/cell-4-output-2.png" class="img-fluid"></p>
 </div>
 </div>
+<p>Let’s create a svd construction function. We can call a built in numpy package on our image array. Sigma is a numpy array containing the singular values of our image. We can reconstruct our image from the equation in the introduction by constructing D, the diagonal matrix containg sigma values. Then, we can matrix multiply U,D, and V to reconstruct our image.</p>
+<p>But, one of the many reasonse we like svd is that we can approximate by using a subset of each matrix. We only need the first k columns of U, the top k singular values in D and the first k rows of V. Assume k is smaller than m and n.&nbsp;Then we can matrix multiply the submatrices for our reconstruction.</p>
 <div class="cell" data-execution_count="95">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> svd_reconstruct(img,k):</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    U,sigma, V <span class="op">=</span> np.linalg.svd(img)</span>
@@ -234,56 +279,49 @@ background: img/landscape.png;
 <pre><code>(480, 360)</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="96">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>svd_reconstruct(grey_img,<span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="96">
-<pre><code>array([[-115.16020268, -113.94576497, -112.51452278, ...,   15.42314048,
-          15.59181338,   14.97993904],
-       [-124.92272266, -123.52778861, -122.14884392, ...,   17.73308457,
-          17.91665198,   17.14883708],
-       [-126.69153471, -125.21577355, -123.86307349, ...,   17.86263662,
-          18.06762718,   17.2273272 ],
-       ...,
-       [ -39.78652356,  -40.10389236,  -40.68231569, ...,  -74.90508133,
-         -74.84317409,  -74.23752121],
-       [ -40.02606806,  -40.35143558,  -40.9520039 , ...,  -75.50097992,
-         -75.44304019,  -74.83105652],
-       [ -39.24880245,  -39.58970541,  -40.19525141, ...,  -76.5545423 ,
-         -76.49462424,  -75.86695182]])</code></pre>
-</div>
-</div>
+<section id="experiments" class="level3">
+<h3 class="anchored" data-anchor-id="experiments">Experiments</h3>
+<p>Now I will perform an experiment in which I reconstruct my image with different k values. I will increase k until I can no longer differentiate my original image from the reconstructed approximation. I will also determine the ammount of storage.</p>
 <div class="cell" data-execution_count="64">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>reconstructions <span class="op">=</span> []</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span> (<span class="dv">1</span>,<span class="dv">7</span>):</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    reconstructions.append((svd_reconstruct(grey_img,<span class="dv">12</span><span class="op">*</span>i),<span class="dv">12</span><span class="op">*</span>i))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>reconstructions <span class="op">=</span> []</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span> (<span class="dv">1</span>,<span class="dv">7</span>):</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    reconstructions.append((svd_reconstruct(grey_img,<span class="dv">12</span><span class="op">*</span>i),<span class="dv">12</span><span class="op">*</span>i))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="114">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>fig,axs <span class="op">=</span> plt.subplots(<span class="dv">2</span>,<span class="dv">4</span>, figsize<span class="op">=</span>(<span class="dv">20</span>,<span class="dv">15</span>))</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>count <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">2</span>):</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>):</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>        axs[i][j].imshow(reconstructions[count][<span class="dv">0</span>],cmap <span class="op">=</span> <span class="st">"Greys"</span>)</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>        axs[i][j].set_title(<span class="bu">str</span>(reconstructions[count][<span class="dv">1</span>])<span class="op">+</span> <span class="st">" Components, </span><span class="ch">\n</span><span class="st"> </span><span class="sc">% s</span><span class="st">torage =  "</span> <span class="op">+</span> <span class="bu">str</span>(<span class="bu">round</span>(((grey_img.shape[<span class="dv">0</span>]<span class="op">+</span>grey_img.shape[<span class="dv">1</span>]<span class="op">+</span><span class="dv">1</span>)<span class="op">*</span>reconstructions[count][<span class="dv">1</span>])<span class="op">/</span>(grey_img.shape[<span class="dv">0</span>]<span class="op">*</span>grey_img.shape[<span class="dv">1</span>])<span class="op">*</span><span class="dv">100</span>,<span class="dv">2</span>))) </span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>        axs[i][j].axis(<span class="st">"off"</span>)</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>        count<span class="op">+=</span><span class="dv">1</span></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">0</span>][<span class="dv">3</span>].imshow(grey_img,cmap<span class="op">=</span><span class="st">"Greys"</span>)</span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">0</span>][<span class="dv">3</span>].axis(<span class="st">"off"</span>)</span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">0</span>][<span class="dv">3</span>].set_title(<span class="st">"orig"</span>)</span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">1</span>][<span class="dv">3</span>].axis(<span class="st">"off"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>fig,axs <span class="op">=</span> plt.subplots(<span class="dv">2</span>,<span class="dv">4</span>, figsize<span class="op">=</span>(<span class="dv">20</span>,<span class="dv">15</span>))</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>count <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">2</span>):</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>):</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>        axs[i][j].imshow(reconstructions[count][<span class="dv">0</span>],cmap <span class="op">=</span> <span class="st">"Greys"</span>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>        axs[i][j].set_title(<span class="bu">str</span>(reconstructions[count][<span class="dv">1</span>])<span class="op">+</span> <span class="st">" Components, </span><span class="ch">\n</span><span class="st"> </span><span class="sc">% s</span><span class="st">torage =  "</span> <span class="op">+</span> <span class="bu">str</span>(<span class="bu">round</span>(((grey_img.shape[<span class="dv">0</span>]<span class="op">+</span>grey_img.shape[<span class="dv">1</span>]<span class="op">+</span><span class="dv">1</span>)<span class="op">*</span>reconstructions[count][<span class="dv">1</span>])<span class="op">/</span>(grey_img.shape[<span class="dv">0</span>]<span class="op">*</span>grey_img.shape[<span class="dv">1</span>])<span class="op">*</span><span class="dv">100</span>,<span class="dv">2</span>))) </span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>        axs[i][j].axis(<span class="st">"off"</span>)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>        count<span class="op">+=</span><span class="dv">1</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">0</span>][<span class="dv">3</span>].imshow(grey_img,cmap<span class="op">=</span><span class="st">"Greys"</span>)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">0</span>][<span class="dv">3</span>].axis(<span class="st">"off"</span>)</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">0</span>][<span class="dv">3</span>].set_title(<span class="st">"orig"</span>)</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">1</span>][<span class="dv">3</span>].axis(<span class="st">"off"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="114">
 <pre><code>(0.0, 1.0, 0.0, 1.0)</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="Unsupervised%20Learning%20Nb_files/figure-html/cell-10-output-2.png" class="img-fluid"></p>
+<p><img src="Unsupervised%20Learning%20Nb_files/figure-html/cell-8-output-2.png" class="img-fluid"></p>
 </div>
 </div>
-<p>if an mxn image needs mn pixels(numbers) to represent it than our greyscale image needs <span class="math inline">\(480 * 360 = 172,800\)</span> numbers</p>
+</section>
+<section id="calculating-storage" class="level3">
+<h3 class="anchored" data-anchor-id="calculating-storage">Calculating Storage</h3>
+<p>If an mxn image needs mn pixels(numbers) to represent it, than our original greyscale image needs <span class="math inline">\(480 * 360 = 172,800\)</span> numbers. Now we will consider our new images. We only need the first k columns of U, the top k singular values in D and the first k rows of V. If <span class="math inline">\(\vec{u}\)</span> is an <span class="math inline">\(m x k\)</span> vector and <span class="math inline">\(\vec{v}\)</span> is a <span class="math inline">\(k x n\)</span> vector, then the product is a <span class="math inline">\(m x n\)</span> maxtrix with <span class="math inline">\(m*n\)</span> items. However, these items can be stored by just storing <span class="math inline">\(\vec{u_k}\)</span> and <span class="math inline">\(\vec{v_k}\)</span>. Storing the product <span class="math inline">\(D_k \vec{u_k} \vec{v_k}\)</span> can be stored with <span class="math inline">\(m+n+k\)</span> items because we just need to the items in D, k singular values. So, we simply get <span class="math inline">\((m+n+1)k\)</span> items for a reconstructed approximation. And we can now calculate the storage needed for all of our images above.</p>
+</section>
+<section id="conclusion" class="level3">
+<h3 class="anchored" data-anchor-id="conclusion">Conclusion</h3>
+<p>This blog post was pretty cool. I liked working with images and really visualizing the reconstructions in comparision to the original photo. It seems like there was not visible difference between our k = 72 image and our original. Storing this photo only takes 35% of the original storage space!</p>
 
 
+</section>
 </section>
 </section>
 
