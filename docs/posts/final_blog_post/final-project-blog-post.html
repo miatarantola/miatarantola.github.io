@@ -331,7 +331,7 @@ background: img/landscape.png;
 </section>
 <section id="visualizations" class="level3">
 <h3 class="anchored" data-anchor-id="visualizations">Visualizations</h3>
-<div class="cell" data-execution_count="2">
+<div class="cell" data-execution_count="1">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> geomapping <span class="im">import</span> Mapping</span>
@@ -361,24 +361,19 @@ background: img/landscape.png;
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co">#plotting predictions</span></span>
 <span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>mp.plot_df(test_combined, <span class="st">"Predicted AQI Binary"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stderr">
-<pre><code>/Users/bridgetulian/Downloads/machine_learning/final-project/final_blog_post/dataCleaning.py:15: SettingWithCopyWarning: 
-A value is trying to be set on a copy of a slice from a DataFrame.
-Try using .loc[row_indexer,col_indexer] = value instead
-
-See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
-  dataset["AQI Binary"] = 1 * (dataset["AQI Total"] &lt;= 100)</code></pre>
-</div>
 <div class="cell-output cell-output-display">
-<iframe scrolling="no" width="100%" height="545px" src="iframe_figures/figure_2.html" frameborder="0" allowfullscreen=""></iframe>
+<iframe scrolling="no" width="100%" height="545px" src="iframe_figures/figure_7.html" frameborder="0" allowfullscreen=""></iframe>
 </div>
 </div>
-<div class="cell">
+<div class="cell" data-execution_count="3">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mp <span class="op">=</span> Mapping()</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>mp.plot_df(test_combined,<span class="st">"Actual AQI Binary"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>mp1 <span class="op">=</span> Mapping()</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>mp1.plot_df(test_combined,<span class="st">"Actual AQI Binary"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+<div class="cell-output cell-output-display">
+<iframe scrolling="no" width="100%" height="545px" src="iframe_figures/figure_3.html" frameborder="0" allowfullscreen=""></iframe>
+</div>
 </div>
 <p>The above mappings of the actual AQI binary and the predicted AQI binary using our SVC model demonstrates the high accuracy of our model, but also demonstrates the high numbers of positive samples we have in our dataset. One thing that we found when exploring the false positive and negative rates of our model was a disproportionately high false positive rate and a disproportionately low false negative rate. When determining how this occurred, we recognized that our dataset has many more ‘positive’ samples than ‘negative’ samples; in other words, we have a dataset that contains many more counties with ‘good’ air quality index than those with ‘bad’ air quality index. This is not something that is disheartening to learn, but rather carries a positive connotation. If most of the areas we are observing have an EPA-determined ‘good’ air quality index, it means that American urban counties are not all suffering from unhealthy air quality.</p>
 <p>However, our model is still able to predict outcomes of ‘good’ or ‘bad’ air quality at a higher accuracy than the base rate. Going back to the statistical significance of our features, the most statistically significant features are the local date, the total population, and the total percentage of females. While this is not necessarily what we were expecting, it still provides interesting. Particularly when it comes to the demographic features, total population having a positive feature importance is very interesting. On one hand, more people utilizing vehicles, breathing out CO2, and otherwise creating pollutants is likely to increase the AQI and decrease air quality. On the other hand, people who are able to afford single-family homes and more room for their families are likely to live in areas with lower total populations. Both of these could help explain the importance of total population in determining air quality. If this project could extend into the future, an interesting project would be examining counties with good and bad air quality side by side and observing how their total populations and living conditions compare.</p>
