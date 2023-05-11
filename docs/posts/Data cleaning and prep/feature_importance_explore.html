@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.189">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>My Awesome CSCI 0451 Blog – feature_importance_explore</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<style>
+    .quarto-title-block .quarto-title-banner {
+      color: white;
+background: img/landscape.png;
+    }
+    </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">My Awesome CSCI 0451 Blog</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">About</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com"><i class="bi bi-twitter" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">'ignore'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#for the map</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#geo pandas, store in dataframe but it is geo referenced to right places</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># we can do this to try and predict good / bad air quality index for places in the united states </span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># based on our model this is so interesting , we can also maybe try and look it at other</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># have county codes and predictions, geo reference data frame that makes map, combine on county codes </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="what-we-can-learn-from-the-following-reasoning-behind-it-all-logistic-regression" class="level2">
+<h2 class="anchored" data-anchor-id="what-we-can-learn-from-the-following-reasoning-behind-it-all-logistic-regression">What We can Learn from the Following / Reasoning behind it all: Logistic Regression</h2>
+<p>Step one was cleaning the data; getting a binary AQI value for our training data, using logistic regression here to begin. Dropping all of the values that play into total AQI as well as categorical data such as state, county, and city. Looking at exclusively different race percentages and household income.</p>
+<p>When we tested for feature importance in Logistic Regression, Household income had the biggest impact. This means we should be looking at household income as it relates to urban pollution, as well as the next most important factors which were state code, county code, total population, percent male, percent female, and then percentages of white alone.</p>
+<p>I also dropped non-city data to specifically look at urban pollution.</p>
+<p>Going to continue by looking at what happens with different models.</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#place holder until we get dataset ready</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.read_csv(<span class="st">"pollution_income_race.csv"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> data[data[<span class="st">"City"</span>] <span class="op">!=</span> <span class="st">"Not in a city"</span>]</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>data[<span class="st">"AQI Binary"</span>] <span class="op">=</span> <span class="dv">1</span> <span class="op">*</span> (data[<span class="st">"AQI Total"</span>] <span class="op">&lt;=</span> <span class="dv">100</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#our labels are the AQI Binary for now</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> data.loc[:,<span class="st">"AQI Binary"</span>]</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#also going to drop states and cities for now, (and city) because we don't get a numerical from that</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> data.drop(columns<span class="op">=</span>[<span class="st">"State_x"</span>, </span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"County_x"</span>,</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"City"</span>,</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"State_y"</span>, </span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"County_y"</span>, </span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"AQI Total"</span>, </span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"AQI Binary"</span>])</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co">#finally, drop those features that directly contribute to AQI (i.e. NO2 Mean, NO2 1st Max Value)</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> data.drop(columns<span class="op">=</span>[<span class="st">"NO2 Mean"</span>,</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"NO2 1st Max Value"</span>,</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"NO2 1st Max Hour"</span>,</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"NO2 AQI"</span>,</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"O3 Mean"</span>,</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"O3 1st Max Value"</span>,</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"O3 1st Max Hour"</span>,</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"O3 AQI"</span>,</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"SO2 Mean"</span>,</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"SO2 1st Max Value"</span>,</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"SO2 1st Max Hour"</span>,</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"SO2 AQI"</span>,</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"CO Mean"</span>,</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"CO 1st Max Value"</span>,</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"CO 1st Max Hour"</span>,</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"CO AQI"</span>])</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a><span class="co">#train and test data</span></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(data, y, test_size<span class="op">=</span><span class="fl">0.33</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#feature importance</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>X_train</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>State Code</th>
+      <th>County Code</th>
+      <th>Date Local</th>
+      <th>Median Household Income</th>
+      <th>Total Pop</th>
+      <th>Total Male %</th>
+      <th>Total Female %</th>
+      <th>White Alone (M) %</th>
+      <th>White Alone (F) %</th>
+      <th>Black Alone (M) %</th>
+      <th>Black Alone (F) %</th>
+      <th>Am Indian+AK Native Alone (M) %</th>
+      <th>Am Indian+AK Native Alone (F) %</th>
+      <th>Asian Alone (M) %</th>
+      <th>Asian Alone (F) %</th>
+      <th>Nat. HI and PI (M) %</th>
+      <th>Nat. HI and PI (F) %</th>
+      <th>TOM_MALE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>66</th>
+      <td>6</td>
+      <td>1</td>
+      <td>2002</td>
+      <td>113518.0</td>
+      <td>10021506</td>
+      <td>0.495390</td>
+      <td>0.504610</td>
+      <td>0.244432</td>
+      <td>0.238668</td>
+      <td>0.051896</td>
+      <td>0.056041</td>
+      <td>0.005613</td>
+      <td>0.005458</td>
+      <td>0.161241</td>
+      <td>0.171451</td>
+      <td>0.004578</td>
+      <td>0.004916</td>
+      <td>0.027631</td>
+    </tr>
+    <tr>
+      <th>835</th>
+      <td>32</td>
+      <td>3</td>
+      <td>2001</td>
+      <td>62496.0</td>
+      <td>13662646</td>
+      <td>0.500808</td>
+      <td>0.499192</td>
+      <td>0.349270</td>
+      <td>0.334776</td>
+      <td>0.065935</td>
+      <td>0.068644</td>
+      <td>0.006304</td>
+      <td>0.006135</td>
+      <td>0.048658</td>
+      <td>0.058518</td>
+      <td>0.004651</td>
+      <td>0.004758</td>
+      <td>0.025988</td>
+    </tr>
+    <tr>
+      <th>67</th>
+      <td>6</td>
+      <td>1</td>
+      <td>2003</td>
+      <td>113518.0</td>
+      <td>10021506</td>
+      <td>0.495390</td>
+      <td>0.504610</td>
+      <td>0.244432</td>
+      <td>0.238668</td>
+      <td>0.051896</td>
+      <td>0.056041</td>
+      <td>0.005613</td>
+      <td>0.005458</td>
+      <td>0.161241</td>
+      <td>0.171451</td>
+      <td>0.004578</td>
+      <td>0.004916</td>
+      <td>0.027631</td>
+    </tr>
+    <tr>
+      <th>447</th>
+      <td>6</td>
+      <td>95</td>
+      <td>2001</td>
+      <td>83678.0</td>
+      <td>2716962</td>
+      <td>0.501149</td>
+      <td>0.498851</td>
+      <td>0.300509</td>
+      <td>0.288954</td>
+      <td>0.074948</td>
+      <td>0.072824</td>
+      <td>0.006718</td>
+      <td>0.006442</td>
+      <td>0.076265</td>
+      <td>0.088328</td>
+      <td>0.005441</td>
+      <td>0.005261</td>
+      <td>0.037269</td>
+    </tr>
+    <tr>
+      <th>217</th>
+      <td>6</td>
+      <td>37</td>
+      <td>2012</td>
+      <td>75624.0</td>
+      <td>59665436</td>
+      <td>0.495714</td>
+      <td>0.504286</td>
+      <td>0.353743</td>
+      <td>0.349500</td>
+      <td>0.042930</td>
+      <td>0.046823</td>
+      <td>0.007591</td>
+      <td>0.007220</td>
+      <td>0.073381</td>
+      <td>0.082331</td>
+      <td>0.001828</td>
+      <td>0.001838</td>
+      <td>0.016241</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1133</th>
+      <td>42</td>
+      <td>69</td>
+      <td>2002</td>
+      <td>56911.0</td>
+      <td>1294150</td>
+      <td>0.489517</td>
+      <td>0.510483</td>
+      <td>0.437606</td>
+      <td>0.461313</td>
+      <td>0.024152</td>
+      <td>0.021254</td>
+      <td>0.001740</td>
+      <td>0.001697</td>
+      <td>0.016049</td>
+      <td>0.016100</td>
+      <td>0.000323</td>
+      <td>0.000383</td>
+      <td>0.009646</td>
+    </tr>
+    <tr>
+      <th>1184</th>
+      <td>42</td>
+      <td>101</td>
+      <td>2005</td>
+      <td>55102.0</td>
+      <td>9562106</td>
+      <td>0.475856</td>
+      <td>0.524144</td>
+      <td>0.218985</td>
+      <td>0.226435</td>
+      <td>0.200090</td>
+      <td>0.235551</td>
+      <td>0.004473</td>
+      <td>0.004774</td>
+      <td>0.037813</td>
+      <td>0.041240</td>
+      <td>0.000867</td>
+      <td>0.000898</td>
+      <td>0.013629</td>
+    </tr>
+    <tr>
+      <th>1219</th>
+      <td>42</td>
+      <td>133</td>
+      <td>2000</td>
+      <td>71655.0</td>
+      <td>2743046</td>
+      <td>0.497499</td>
+      <td>0.502501</td>
+      <td>0.438321</td>
+      <td>0.443527</td>
+      <td>0.037588</td>
+      <td>0.036162</td>
+      <td>0.002079</td>
+      <td>0.001843</td>
+      <td>0.007190</td>
+      <td>0.008613</td>
+      <td>0.000395</td>
+      <td>0.000416</td>
+      <td>0.011926</td>
+    </tr>
+    <tr>
+      <th>924</th>
+      <td>36</td>
+      <td>103</td>
+      <td>2002</td>
+      <td>109084.0</td>
+      <td>9152726</td>
+      <td>0.495513</td>
+      <td>0.504487</td>
+      <td>0.416442</td>
+      <td>0.422438</td>
+      <td>0.043497</td>
+      <td>0.045976</td>
+      <td>0.003550</td>
+      <td>0.003241</td>
+      <td>0.021259</td>
+      <td>0.022082</td>
+      <td>0.000557</td>
+      <td>0.000519</td>
+      <td>0.010207</td>
+    </tr>
+    <tr>
+      <th>1215</th>
+      <td>42</td>
+      <td>129</td>
+      <td>2005</td>
+      <td>59349.0</td>
+      <td>2123436</td>
+      <td>0.493617</td>
+      <td>0.506383</td>
+      <td>0.464779</td>
+      <td>0.479903</td>
+      <td>0.014620</td>
+      <td>0.012278</td>
+      <td>0.000807</td>
+      <td>0.000656</td>
+      <td>0.004862</td>
+      <td>0.005320</td>
+      <td>0.000122</td>
+      <td>0.000111</td>
+      <td>0.008428</td>
+    </tr>
+  </tbody>
+</table>
+<p>858 rows × 18 columns</p>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>y_train</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#making y_train into categorical (good, bad) for now. 1 is good, 0 is worst</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#using threshold from epa.gov: 100 and below gets 1, 101 and above gets 0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>66      1
+835     1
+67      1
+447     1
+217     1
+       ..
+1133    1
+1184    1
+1219    1
+924     1
+1215    1
+Name: AQI Binary, Length: 858, dtype: int64</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>X_train.columns.values.tolist()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<pre><code>['State Code',
+ 'County Code',
+ 'Date Local',
+ 'Median Household Income',
+ 'Total Pop',
+ 'Total Male %',
+ 'Total Female %',
+ 'White Alone (M) %',
+ 'White Alone (F) %',
+ 'Black Alone (M) %',
+ 'Black Alone (F) %',
+ 'Am Indian+AK Native Alone (M) %',
+ 'Am Indian+AK Native Alone (F) %',
+ 'Asian Alone (M) %',
+ 'Asian Alone (F) %',
+ 'Nat. HI and PI (M) %',
+ 'Nat. HI and PI (F) %',
+ 'TOM_MALE']</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>data.dtypes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>State Code                           int64
+County Code                          int64
+Date Local                           int64
+Median Household Income            float64
+Total Pop                            int64
+Total Male %                       float64
+Total Female %                     float64
+White Alone (M) %                  float64
+White Alone (F) %                  float64
+Black Alone (M) %                  float64
+Black Alone (F) %                  float64
+Am Indian+AK Native Alone (M) %    float64
+Am Indian+AK Native Alone (F) %    float64
+Asian Alone (M) %                  float64
+Asian Alone (F) %                  float64
+Nat. HI and PI (M) %               float64
+Nat. HI and PI (F) %               float64
+TOM_MALE                           float64
+dtype: object</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#try feature importance w Logistic Regression</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> pyplot <span class="im">as</span> plt</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>RF <span class="op">=</span> RandomForestClassifier()</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>RF.fit(X_train, y_train)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co">#get importance</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>importances <span class="op">=</span> pd.DataFrame(data <span class="op">=</span> </span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>                           {<span class="st">'Attribute'</span>: X_train.columns,</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'Importance'</span>: RF.feature_importances_</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>                           })</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>importances.sort_values(<span class="st">'Importance'</span>)</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>importances <span class="op">=</span> importances[<span class="dv">0</span>:<span class="dv">5</span>]</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="co">#plot importance for features</span></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>plt.bar(x<span class="op">=</span>importances[<span class="st">'Attribute'</span>], height<span class="op">=</span>importances[<span class="st">'Importance'</span>], color<span class="op">=</span><span class="st">'#087E8B'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<pre><code>&lt;BarContainer object of 5 artists&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="feature_importance_explore_files/figure-html/cell-9-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#get importance</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>importances <span class="op">=</span> pd.DataFrame(data <span class="op">=</span> </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>                           {<span class="st">'Attribute'</span>: X_train.columns,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'Importance'</span>: RF.feature_importances_</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>                           })</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>importances.sort_values(<span class="st">'Importance'</span>)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>importances <span class="op">=</span> importances[<span class="dv">5</span>:<span class="dv">10</span>]</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co">#plot importance for features</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>plt.bar(x<span class="op">=</span>importances[<span class="st">'Attribute'</span>], height<span class="op">=</span>importances[<span class="st">'Importance'</span>], color<span class="op">=</span><span class="st">'#087E8B'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="18">
+<pre><code>&lt;BarContainer object of 5 artists&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="feature_importance_explore_files/figure-html/cell-10-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<section id="to-note" class="level3">
+<h3 class="anchored" data-anchor-id="to-note">to note:</h3>
+<p>negative feature importance means that feature actually increases our loss (so % Black alone (M) actually increases the loss of our feature).</p>
+<div class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">#get importance</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>importances <span class="op">=</span> pd.DataFrame(data <span class="op">=</span> </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>                           {<span class="st">'Attribute'</span>: X_train.columns,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'Importance'</span>: RF.feature_importances_</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>                           })</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>importances.sort_values(<span class="st">'Importance'</span>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>importances <span class="op">=</span> importances[<span class="dv">11</span>:<span class="dv">15</span>]</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="co">#plot importance for features</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>plt.bar(x<span class="op">=</span>importances[<span class="st">'Attribute'</span>], height<span class="op">=</span>importances[<span class="st">'Importance'</span>], color<span class="op">=</span><span class="st">'#087E8B'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="20">
+<pre><code>&lt;BarContainer object of 4 artists&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="feature_importance_explore_files/figure-html/cell-11-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">#get importance</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>importances <span class="op">=</span> pd.DataFrame(data <span class="op">=</span> </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>                           {<span class="st">'Attribute'</span>: X_train.columns,</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'Importance'</span>: RF.feature_importances_</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>                           })</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>importances.sort_values(<span class="st">'Importance'</span>)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>importances <span class="op">=</span> importances[<span class="dv">15</span>:<span class="dv">20</span>]</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="co">#plot importance for features</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>plt.bar(x<span class="op">=</span>importances[<span class="st">'Attribute'</span>], height<span class="op">=</span>importances[<span class="st">'Importance'</span>], color<span class="op">=</span><span class="st">'#087E8B'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="21">
+<pre><code>&lt;BarContainer object of 3 artists&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="feature_importance_explore_files/figure-html/cell-12-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="looking-into-models" class="level2">
+<h2 class="anchored" data-anchor-id="looking-into-models">Looking into models</h2>
+<p>Starting with some of the basic scie kit learn models to compare. Depending on how they do I think we could have a binary classifier type model and then attempt linear regression to predict actual values which might not work as well on our data.</p>
+<section id="logistic-regression" class="level3">
+<h3 class="anchored" data-anchor-id="logistic-regression">Logistic Regression</h3>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>LR <span class="op">=</span> LogisticRegression()</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>LR.fit(X_train, y_train)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Training Accuracy:"</span>)</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(LR.score(X_train, y_train))</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Testing Accuracy:"</span>)</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(LR.score(X_test, y_test))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Training Accuracy:
+0.8916083916083916
+Testing Accuracy:
+0.8605200945626478</code></pre>
+</div>
+</div>
+</section>
+<section id="linear-regression" class="level3">
+<h3 class="anchored" data-anchor-id="linear-regression">Linear Regression</h3>
+<div class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>LinR <span class="op">=</span> LinearRegression()</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>LinR.fit(X_train, y_train)</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>X2 <span class="op">=</span> sm.add_constant(X_train)</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>est <span class="op">=</span> sm.OLS(y_train, X2)</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>est2 <span class="op">=</span> est.fit()</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(est2.summary())</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(LinR.score(X_train,y_train))</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(LinR.score(X_test, y_test))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:             AQI Binary   R-squared:                       0.222
+Model:                            OLS   Adj. R-squared:                  0.207
+Method:                 Least Squares   F-statistic:                     15.02
+Date:                Mon, 08 May 2023   Prob (F-statistic):           1.74e-36
+Time:                        09:35:57   Log-Likelihood:                -107.15
+No. Observations:                 858   AIC:                             248.3
+Df Residuals:                     841   BIC:                             329.1
+Df Model:                          16                                         
+Covariance Type:            nonrobust                                         
+===================================================================================================
+                                      coef    std err          t      P&gt;|t|      [0.025      0.975]
+---------------------------------------------------------------------------------------------------
+const                             -31.2009      9.446     -3.303      0.001     -49.741     -12.660
+State Code                          0.0003      0.001      0.365      0.715      -0.001       0.002
+County Code                      3.285e-06      0.000      0.026      0.979      -0.000       0.000
+Date Local                          0.0265      0.002     13.431      0.000       0.023       0.030
+Median Household Income         -1.702e-07   8.86e-07     -0.192      0.848   -1.91e-06    1.57e-06
+Total Pop                       -4.012e-09   9.09e-10     -4.416      0.000    -5.8e-09   -2.23e-09
+Total Male %                        1.3179     12.005      0.110      0.913     -22.244      24.880
+Total Female %                    -32.5189     15.408     -2.110      0.035     -62.762      -2.276
+White Alone (M) %                 -24.4056     15.063     -1.620      0.106     -53.972       5.160
+White Alone (F) %                  13.3808     22.165      0.604      0.546     -30.123      56.885
+Black Alone (M) %                 -19.0131     14.457     -1.315      0.189     -47.389       9.362
+Black Alone (F) %                   8.2171     22.549      0.364      0.716     -36.042      52.476
+Am Indian+AK Native Alone (M) %   -16.0201     20.867     -0.768      0.443     -56.978      24.938
+Am Indian+AK Native Alone (F) %     5.8647     26.545      0.221      0.825     -46.237      57.967
+Asian Alone (M) %                 -28.0058     14.896     -1.880      0.060     -57.243       1.232
+Asian Alone (F) %                  18.0117     22.803      0.790      0.430     -26.745      62.769
+Nat. HI and PI (M) %               99.3350     85.132      1.167      0.244     -67.761     266.431
+Nat. HI and PI (F) %             -111.3928    105.940     -1.051      0.293    -319.331      96.545
+TOM_MALE                          -10.5724     27.416     -0.386      0.700     -64.384      43.239
+==============================================================================
+Omnibus:                      246.949   Durbin-Watson:                   2.019
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):              536.718
+Skew:                          -1.605   Prob(JB):                    2.84e-117
+Kurtosis:                       5.169   Cond. No.                     6.32e+23
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+[2] The smallest eigenvalue is 5.7e-31. This might indicate that there are
+strong multicollinearity problems or that the design matrix is singular.
+0.22226355692058475
+0.24682277427275767</code></pre>
+</div>
+</div>
+</section>
+<section id="logistic-regression-with-polynomial-features" class="level3">
+<h3 class="anchored" data-anchor-id="logistic-regression-with-polynomial-features">Logistic Regression with polynomial features</h3>
+<p>code for poly_LR from class notes. Doesn’t seem to be working since identical to normal LR training score and the score doesn’t change from degree = 1 to degree = 2 but unsure why.</p>
+<div class="cell" data-scrolled="true" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> PolynomialFeatures</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> poly_LR(degree, <span class="op">**</span>kwargs):</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    plr <span class="op">=</span> Pipeline([(<span class="st">"poly"</span>, PolynomialFeatures(degree <span class="op">=</span> degree)),</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>                    (<span class="st">"LR"</span>, LogisticRegression(<span class="op">**</span>kwargs))])</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> plr</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>plr <span class="op">=</span> poly_LR(degree <span class="op">=</span> <span class="dv">2</span>, max_iter <span class="op">=</span> <span class="dv">1000000</span>)</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>plr.fit(X_train, y_train)</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Training accuracy"</span>)</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(plr.score(X_train, y_train))</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Testing accuracy"</span>)</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(plr.score(X_test, y_test))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Training accuracy
+0.8916083916083916
+Testing accuracy
+0.8605200945626478</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># coefficients -- wanted to see what this looks like, they're all very small coefficients maybe that has </span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="co">#something to do with how low the degrees change the accuracy? </span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"coefficients of model:"</span>)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(plr.named_steps[<span class="st">'LR'</span>].coef_)</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"biases of model:"</span>)</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(plr.named_steps[<span class="st">'LR'</span>].intercept_)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="support-vector-machine" class="level3">
+<h3 class="anchored" data-anchor-id="support-vector-machine">Support Vector Machine</h3>
+<div class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.svm <span class="im">import</span> SVC</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> cross_val_score</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>svc <span class="op">=</span> SVC(gamma <span class="op">=</span> <span class="st">"auto"</span>) </span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>svc.fit(X_train, y_train)</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Training Accuracy:"</span>)</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(svc.score(X_train, y_train))</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Test accuracy"</span>)</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(svc.score(X_test, y_test))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Training Accuracy:
+0.9463869463869464
+Test accuracy
+0.9054373522458629</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>best_score <span class="op">=</span> <span class="op">-</span>np.inf</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>best_gamma <span class="op">=</span> np.inf</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> gammas <span class="kw">in</span> <span class="dv">6</span><span class="op">**</span>(np.arange(<span class="op">-</span><span class="dv">4</span>,<span class="dv">4</span>, dtype <span class="op">=</span> <span class="bu">float</span>)):</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    svc <span class="op">=</span> SVC(gamma <span class="op">=</span> gammas)</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>    scores <span class="op">=</span> cross_val_score(svc, X_train, y_train,cv<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> scores.mean()<span class="op">&gt;</span>best_score:</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>        best_score <span class="op">=</span> scores.mean()</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>        best_gamma <span class="op">=</span> gammas</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(best_score, best_gamma)</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.9114096573208723 0.027777777777777776</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>svc_model <span class="op">=</span> SVC(gamma <span class="op">=</span> <span class="fl">.027777777777777776</span>)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>svc_model.fit(X_train,y_train)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"training accuracy"</span>)</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(svc_model.score(X_train,y_train))</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"testing"</span>)</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(svc_model.score(X_test,y_test))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>training accuracy
+0.9358974358974359
+testing
+0.9054373522458629</code></pre>
+</div>
+</div>
+</section>
+<section id="decision-tree-classifier" class="level3">
+<h3 class="anchored" data-anchor-id="decision-tree-classifier">Decision Tree Classifier</h3>
+<div class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeClassifier</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> cross_val_score</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>best_score <span class="op">=</span> <span class="op">-</span>np.inf</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>maximum <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> depth <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">2</span>,<span class="dv">25</span>):</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>    tree <span class="op">=</span> DecisionTreeClassifier(max_depth <span class="op">=</span> depth)</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">#scores = cross_val_score(tree, X_train[subset], y_train, cv = 11)</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>    scores <span class="op">=</span> cross_val_score(tree, X_train, y_train, cv <span class="op">=</span> <span class="dv">9</span>)</span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> scores.mean() <span class="op">&gt;</span> best_score:</span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>        best_score <span class="op">=</span> scores.mean()</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>        maximum <span class="op">=</span> depth</span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(best_score, maximum)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.898525828460039 5</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>tree <span class="op">=</span> DecisionTreeClassifier(max_depth <span class="op">=</span> <span class="dv">5</span>)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>tree.fit(X_train,y_train)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"training"</span>)</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tree.score(X_train,y_train))</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"testing"</span>)</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tree.score(X_test,y_test))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>training
+0.9335664335664335
+testing
+0.900709219858156</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="working-with-geopandas-or-trying-to" class="level2">
+<h2 class="anchored" data-anchor-id="working-with-geopandas-or-trying-to">working with geopandas, or trying to</h2>
+<div class="cell" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co">#have to pip install folium, mapclassify, geopandas, matplotlib</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> folium</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> mapclassify</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>geo_data <span class="op">=</span> gpd.read_file(<span class="st">'https://raw.githubusercontent.com/holtzy/The-Python-Graph-Gallery/master/static/data/US-counties.geojson'</span>)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>geo_data.<span class="bu">id</span> <span class="op">=</span> geo_data.<span class="bu">id</span>.astype(<span class="bu">str</span>).astype(<span class="bu">int</span>)</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>geo_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="27">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>id</th>
+      <th>GEO_ID</th>
+      <th>STATE</th>
+      <th>COUNTY</th>
+      <th>NAME</th>
+      <th>LSAD</th>
+      <th>CENSUSAREA</th>
+      <th>geometry</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1001</td>
+      <td>0500000US01001</td>
+      <td>01</td>
+      <td>001</td>
+      <td>Autauga</td>
+      <td>County</td>
+      <td>594.436</td>
+      <td>POLYGON ((-86.49677 32.34444, -86.71790 32.402...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1009</td>
+      <td>0500000US01009</td>
+      <td>01</td>
+      <td>009</td>
+      <td>Blount</td>
+      <td>County</td>
+      <td>644.776</td>
+      <td>POLYGON ((-86.57780 33.76532, -86.75914 33.840...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1017</td>
+      <td>0500000US01017</td>
+      <td>01</td>
+      <td>017</td>
+      <td>Chambers</td>
+      <td>County</td>
+      <td>596.531</td>
+      <td>POLYGON ((-85.18413 32.87053, -85.12342 32.772...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1021</td>
+      <td>0500000US01021</td>
+      <td>01</td>
+      <td>021</td>
+      <td>Chilton</td>
+      <td>County</td>
+      <td>692.854</td>
+      <td>POLYGON ((-86.51734 33.02057, -86.51596 32.929...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1033</td>
+      <td>0500000US01033</td>
+      <td>01</td>
+      <td>033</td>
+      <td>Colbert</td>
+      <td>County</td>
+      <td>592.619</td>
+      <td>POLYGON ((-88.13999 34.58170, -88.13925 34.587...</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>3216</th>
+      <td>51001</td>
+      <td>0500000US51001</td>
+      <td>51</td>
+      <td>001</td>
+      <td>Accomack</td>
+      <td>County</td>
+      <td>449.496</td>
+      <td>MULTIPOLYGON (((-75.24227 38.02721, -75.29687 ...</td>
+    </tr>
+    <tr>
+      <th>3217</th>
+      <td>51021</td>
+      <td>0500000US51021</td>
+      <td>51</td>
+      <td>021</td>
+      <td>Bland</td>
+      <td>County</td>
+      <td>357.725</td>
+      <td>POLYGON ((-81.22510 37.23487, -81.20477 37.243...</td>
+    </tr>
+    <tr>
+      <th>3218</th>
+      <td>51027</td>
+      <td>0500000US51027</td>
+      <td>51</td>
+      <td>027</td>
+      <td>Buchanan</td>
+      <td>County</td>
+      <td>502.763</td>
+      <td>POLYGON ((-81.96830 37.53780, -81.92787 37.512...</td>
+    </tr>
+    <tr>
+      <th>3219</th>
+      <td>51037</td>
+      <td>0500000US51037</td>
+      <td>51</td>
+      <td>037</td>
+      <td>Charlotte</td>
+      <td>County</td>
+      <td>475.271</td>
+      <td>POLYGON ((-78.44332 37.07940, -78.49303 36.891...</td>
+    </tr>
+    <tr>
+      <th>3220</th>
+      <td>51041</td>
+      <td>0500000US51041</td>
+      <td>51</td>
+      <td>041</td>
+      <td>Chesterfield</td>
+      <td>County</td>
+      <td>423.297</td>
+      <td>POLYGON ((-77.85180 37.35487, -77.85515 37.418...</td>
+    </tr>
+  </tbody>
+</table>
+<p>3221 rows × 8 columns</p>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="29">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co">#county code and state codes are the same in the two data frames</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="co">#print(data.loc[data['County Code'] == 33])</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="co">#print(geo_data.loc[geo_data['COUNTY'] == '033'])</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="co">#shifting state/county codes from objects to integers</span></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(geo_data.dtypes)</span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>geo_data[<span class="st">'COUNTY'</span>] <span class="op">=</span> geo_data.COUNTY.astype(<span class="bu">str</span>).astype(<span class="bu">int</span>)</span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>geo_data[<span class="st">'STATE'</span>] <span class="op">=</span> geo_data.STATE.astype(<span class="bu">str</span>).astype(<span class="bu">int</span>)</span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(geo_data.dtypes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>id               int64
+GEO_ID          object
+STATE            int64
+COUNTY           int64
+NAME            object
+LSAD            object
+CENSUSAREA     float64
+geometry      geometry
+dtype: object
+id               int64
+GEO_ID          object
+STATE            int64
+COUNTY           int64
+NAME            object
+LSAD            object
+CENSUSAREA     float64
+geometry      geometry
+dtype: object</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="30">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># trying to merge the two data sets</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>merged_df <span class="op">=</span> pd.merge(geo_data, data, left_on<span class="op">=</span><span class="st">'COUNTY'</span>, right_on<span class="op">=</span><span class="st">'County Code'</span>)</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>merged_df.plot()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="30">
+<pre><code>&lt;Axes: &gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="feature_importance_explore_files/figure-html/cell-25-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="mapping-test-data-aqi-binary" class="level2">
+<h2 class="anchored" data-anchor-id="mapping-test-data-aqi-binary">Mapping test data (AQI Binary)</h2>
+<p>merging our X_test, y_test with the geodata. Trying to make chloropleth map.</p>
+<div class="cell" data-execution_count="35">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co">#want to map the actual and predicted AQI for the test data </span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>test_merge <span class="op">=</span> X_test </span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>test_merge[<span class="st">"AQI Binary"</span>] <span class="op">=</span> y_test</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>test_merge <span class="op">=</span> pd.merge(geo_data, X_test, left_on<span class="op">=</span><span class="st">'COUNTY'</span>, right_on<span class="op">=</span><span class="st">'County Code'</span>, how <span class="op">=</span> <span class="st">"right"</span>)</span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>test_merge.plot(column<span class="op">=</span><span class="st">"AQI Binary"</span>, ax<span class="op">=</span>ax, legend<span class="op">=</span><span class="va">True</span>, cmap<span class="op">=</span><span class="st">"coolwarm"</span>)</span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="35">
+<pre><code>&lt;Axes: &gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="feature_importance_explore_files/figure-html/cell-26-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>geo_data.explore() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
