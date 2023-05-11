@@ -2,6 +2,10 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/Data cleaning and prep/Trends and Exploring.html",
+      "/posts/Data cleaning and prep/feature_importance_explore.html",
+      "/posts/Data cleaning and prep/final_jupyter_nb.html",
+      "/posts/Data cleaning and prep/Data Cleaning.html",
       "/posts/final_blog_post/final-project-blog-post.html",
       "/posts/Timnit Gebru Blog Post/Timnit Gebru NB.html",
       "/posts/Unsupervised Learning Blog Post/Unsupervised Learning Nb.html",

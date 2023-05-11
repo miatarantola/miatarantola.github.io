@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.189">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>My Awesome CSCI 0451 Blog – final_jupyter_nb</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<style>
+    .quarto-title-block .quarto-title-banner {
+      color: white;
+background: img/landscape.png;
+    }
+    </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">My Awesome CSCI 0451 Blog</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">About</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com"><i class="bi bi-twitter" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+<section id="final-project-urban-air-pollution-predicted-by-income-and-racial-demographics" class="level1">
+<h1>Final Project: Urban Air Pollution Predicted by Income and Racial Demographics</h1>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> pyplot <span class="im">as</span> plt</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.io <span class="im">as</span> pio</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>pio.templates.default <span class="op">=</span> <span class="st">"plotly_white"</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">#check against other studies, check p values </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">'ignore'</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>load_ext autoreload</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>autoreload <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="part-one-cleaning-data" class="level2">
+<h2 class="anchored" data-anchor-id="part-one-cleaning-data">Part One: Cleaning Data</h2>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dataCleaning <span class="im">import</span> DatasetClass</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> DatasetClass()</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>dataset <span class="op">=</span> pd.read_csv(<span class="st">"pollution_income_race.csv"</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> ds.train_test_data(dataset)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>base_rate <span class="op">=</span> y_test.mean()</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>base_rate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>0.8605200945626478</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>X_train</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>State Code</th>
+      <th>County Code</th>
+      <th>Date Local</th>
+      <th>Median Household Income</th>
+      <th>Total Pop</th>
+      <th>Total Male %</th>
+      <th>Total Female %</th>
+      <th>White Alone (M) %</th>
+      <th>White Alone (F) %</th>
+      <th>Black Alone (M) %</th>
+      <th>Black Alone (F) %</th>
+      <th>Am Indian+AK Native Alone (M) %</th>
+      <th>Am Indian+AK Native Alone (F) %</th>
+      <th>Asian Alone (M) %</th>
+      <th>Asian Alone (F) %</th>
+      <th>Nat. HI and PI (M) %</th>
+      <th>Nat. HI and PI (F) %</th>
+      <th>TOM_MALE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>66</th>
+      <td>6</td>
+      <td>1</td>
+      <td>2002</td>
+      <td>113518.0</td>
+      <td>10021506</td>
+      <td>0.495390</td>
+      <td>0.504610</td>
+      <td>0.244432</td>
+      <td>0.238668</td>
+      <td>0.051896</td>
+      <td>0.056041</td>
+      <td>0.005613</td>
+      <td>0.005458</td>
+      <td>0.161241</td>
+      <td>0.171451</td>
+      <td>0.004578</td>
+      <td>0.004916</td>
+      <td>0.027631</td>
+    </tr>
+    <tr>
+      <th>835</th>
+      <td>32</td>
+      <td>3</td>
+      <td>2001</td>
+      <td>62496.0</td>
+      <td>13662646</td>
+      <td>0.500808</td>
+      <td>0.499192</td>
+      <td>0.349270</td>
+      <td>0.334776</td>
+      <td>0.065935</td>
+      <td>0.068644</td>
+      <td>0.006304</td>
+      <td>0.006135</td>
+      <td>0.048658</td>
+      <td>0.058518</td>
+      <td>0.004651</td>
+      <td>0.004758</td>
+      <td>0.025988</td>
+    </tr>
+    <tr>
+      <th>67</th>
+      <td>6</td>
+      <td>1</td>
+      <td>2003</td>
+      <td>113518.0</td>
+      <td>10021506</td>
+      <td>0.495390</td>
+      <td>0.504610</td>
+      <td>0.244432</td>
+      <td>0.238668</td>
+      <td>0.051896</td>
+      <td>0.056041</td>
+      <td>0.005613</td>
+      <td>0.005458</td>
+      <td>0.161241</td>
+      <td>0.171451</td>
+      <td>0.004578</td>
+      <td>0.004916</td>
+      <td>0.027631</td>
+    </tr>
+    <tr>
+      <th>447</th>
+      <td>6</td>
+      <td>95</td>
+      <td>2001</td>
+      <td>83678.0</td>
+      <td>2716962</td>
+      <td>0.501149</td>
+      <td>0.498851</td>
+      <td>0.300509</td>
+      <td>0.288954</td>
+      <td>0.074948</td>
+      <td>0.072824</td>
+      <td>0.006718</td>
+      <td>0.006442</td>
+      <td>0.076265</td>
+      <td>0.088328</td>
+      <td>0.005441</td>
+      <td>0.005261</td>
+      <td>0.037269</td>
+    </tr>
+    <tr>
+      <th>217</th>
+      <td>6</td>
+      <td>37</td>
+      <td>2012</td>
+      <td>75624.0</td>
+      <td>59665436</td>
+      <td>0.495714</td>
+      <td>0.504286</td>
+      <td>0.353743</td>
+      <td>0.349500</td>
+      <td>0.042930</td>
+      <td>0.046823</td>
+      <td>0.007591</td>
+      <td>0.007220</td>
+      <td>0.073381</td>
+      <td>0.082331</td>
+      <td>0.001828</td>
+      <td>0.001838</td>
+      <td>0.016241</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1133</th>
+      <td>42</td>
+      <td>69</td>
+      <td>2002</td>
+      <td>56911.0</td>
+      <td>1294150</td>
+      <td>0.489517</td>
+      <td>0.510483</td>
+      <td>0.437606</td>
+      <td>0.461313</td>
+      <td>0.024152</td>
+      <td>0.021254</td>
+      <td>0.001740</td>
+      <td>0.001697</td>
+      <td>0.016049</td>
+      <td>0.016100</td>
+      <td>0.000323</td>
+      <td>0.000383</td>
+      <td>0.009646</td>
+    </tr>
+    <tr>
+      <th>1184</th>
+      <td>42</td>
+      <td>101</td>
+      <td>2005</td>
+      <td>55102.0</td>
+      <td>9562106</td>
+      <td>0.475856</td>
+      <td>0.524144</td>
+      <td>0.218985</td>
+      <td>0.226435</td>
+      <td>0.200090</td>
+      <td>0.235551</td>
+      <td>0.004473</td>
+      <td>0.004774</td>
+      <td>0.037813</td>
+      <td>0.041240</td>
+      <td>0.000867</td>
+      <td>0.000898</td>
+      <td>0.013629</td>
+    </tr>
+    <tr>
+      <th>1219</th>
+      <td>42</td>
+      <td>133</td>
+      <td>2000</td>
+      <td>71655.0</td>
+      <td>2743046</td>
+      <td>0.497499</td>
+      <td>0.502501</td>
+      <td>0.438321</td>
+      <td>0.443527</td>
+      <td>0.037588</td>
+      <td>0.036162</td>
+      <td>0.002079</td>
+      <td>0.001843</td>
+      <td>0.007190</td>
+      <td>0.008613</td>
+      <td>0.000395</td>
+      <td>0.000416</td>
+      <td>0.011926</td>
+    </tr>
+    <tr>
+      <th>924</th>
+      <td>36</td>
+      <td>103</td>
+      <td>2002</td>
+      <td>109084.0</td>
+      <td>9152726</td>
+      <td>0.495513</td>
+      <td>0.504487</td>
+      <td>0.416442</td>
+      <td>0.422438</td>
+      <td>0.043497</td>
+      <td>0.045976</td>
+      <td>0.003550</td>
+      <td>0.003241</td>
+      <td>0.021259</td>
+      <td>0.022082</td>
+      <td>0.000557</td>
+      <td>0.000519</td>
+      <td>0.010207</td>
+    </tr>
+    <tr>
+      <th>1215</th>
+      <td>42</td>
+      <td>129</td>
+      <td>2005</td>
+      <td>59349.0</td>
+      <td>2123436</td>
+      <td>0.493617</td>
+      <td>0.506383</td>
+      <td>0.464779</td>
+      <td>0.479903</td>
+      <td>0.014620</td>
+      <td>0.012278</td>
+      <td>0.000807</td>
+      <td>0.000656</td>
+      <td>0.004862</td>
+      <td>0.005320</td>
+      <td>0.000122</td>
+      <td>0.000111</td>
+      <td>0.008428</td>
+    </tr>
+  </tbody>
+</table>
+<p>858 rows × 18 columns</p>
+</div>
+</div>
+</div>
+</section>
+<section id="part-two-determining-feature-importance" class="level2">
+<h2 class="anchored" data-anchor-id="part-two-determining-feature-importance">Part Two: Determining Feature Importance</h2>
+<p>Feature importance determines how much each feature impacts the AQI when increased by one factor with all other features held constant. What we find below determining feature importance in our data set is that each feature has a relatively low impact on AQI. As we continue training models, however, it is clear that these features together have a significant impact on AQI as they can predict AQI outcome with remarkable accuracy.</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> feature_importance(X_train, y_train):</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">    This function determines the feature importance of each feature in the dataset and sorts them</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">    by importance using Random Forest and Gini import.</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    RF <span class="op">=</span> RandomForestClassifier()</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    RF.fit(X_train, y_train)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">#get importance</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    importances <span class="op">=</span> pd.DataFrame(data <span class="op">=</span> </span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>                               {<span class="st">'Attribute'</span>: X_train.columns,</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>                                <span class="st">'Importance'</span>: RF.feature_importances_</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>                               })</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    importances.sort_values(<span class="st">'Importance'</span>)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> importances</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>importances <span class="op">=</span> feature_importance(X_train, y_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Below we see the results of the first 10 most important features; Date Local is the feature with the most impact on the AQI, followed by Median Household Income, State Code, Total Male % and then Total Female %. However, it is important to note that most feature importances are below approximately .005.</p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#plotting the importances in two batches</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#first batch</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>importances10 <span class="op">=</span> importances[<span class="dv">0</span>:<span class="dv">10</span>]</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>plt.barh(y<span class="op">=</span>importances10[<span class="st">'Attribute'</span>], width<span class="op">=</span>importances10[<span class="st">'Importance'</span>], color<span class="op">=</span><span class="st">'#087E8B'</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Top 10 Features by Importance in Predicting AQI"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>Text(0.5, 1.0, 'Top 10 Features by Importance in Predicting AQI')</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="final_jupyter_nb_files/figure-html/cell-7-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<p>Below we see the results of the final 8 features and their importances, all of which have very miniscule feature importance values. However, the next most important features all have to do with racial and ethnic demographics.</p>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#second 8</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>importances20 <span class="op">=</span> importances[<span class="dv">10</span>:<span class="dv">18</span>]</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>plt.barh(y<span class="op">=</span>importances20[<span class="st">'Attribute'</span>], width<span class="op">=</span>importances20[<span class="st">'Importance'</span>], color<span class="op">=</span><span class="st">'#087E8B'</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"11th-18th Most Important Features in Predicting AQI"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>Text(0.5, 1.0, '11th-18th Most Important Features in Predicting AQI')</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="final_jupyter_nb_files/figure-html/cell-8-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="part-three-looking-at-accuracies-of-different-models" class="level2">
+<h2 class="anchored" data-anchor-id="part-three-looking-at-accuracies-of-different-models">Part Three: Looking at Accuracies of Different Models</h2>
+<section id="logistic-regression" class="level3">
+<h3 class="anchored" data-anchor-id="logistic-regression">Logistic Regression</h3>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>LR <span class="op">=</span> LogisticRegression()</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>LR.fit(X_train, y_train)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Training Accuracy:"</span>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(LR.score(X_train, y_train))</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Testing Accuracy:"</span>)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(LR.score(X_test, y_test))</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Training Accuracy:
+0.8916083916083916
+Testing Accuracy:
+0.8605200945626478</code></pre>
+</div>
+</div>
+</section>
+<section id="logistic-regression-with-polynomial-features-including-coefficients" class="level3">
+<h3 class="anchored" data-anchor-id="logistic-regression-with-polynomial-features-including-coefficients">Logistic Regression with Polynomial Features: Including Coefficients</h3>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> PolynomialFeatures</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> poly_LR(degree, <span class="op">**</span>kwargs):</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    plr <span class="op">=</span> Pipeline([(<span class="st">"poly"</span>, PolynomialFeatures(degree <span class="op">=</span> degree)),</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>                    (<span class="st">"LR"</span>, LogisticRegression(<span class="op">**</span>kwargs))])</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> plr</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>plr <span class="op">=</span> poly_LR(degree <span class="op">=</span> <span class="dv">2</span>, max_iter <span class="op">=</span> <span class="dv">1000000</span>)</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>plr.fit(X_train, y_train)</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Training accuracy"</span>)</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(plr.score(X_train, y_train))</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Testing accuracy"</span>)</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(plr.score(X_test, y_test))</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="co"># check p values for statistical significance</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Training accuracy
+0.8916083916083916
+Testing accuracy
+0.8605200945626478</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"coefficients of model:"</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(plr.named_steps[<span class="st">'LR'</span>].coef_)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"biases of model:"</span>)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(plr.named_steps[<span class="st">'LR'</span>].intercept_)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>coefficients of model:
+
+[[ 1.11276049e-23  2.70910398e-22  8.13314987e-22  2.23670684e-20
+   8.26684574e-19  5.39082056e-17  5.49742047e-24  5.63018441e-24
+   4.02195097e-24  4.05052126e-24  7.24190483e-25  7.90383926e-25
+   1.21744623e-25  1.22740132e-25  4.17892468e-25  4.50642155e-25
+   1.62466672e-26  1.60424146e-26  1.95395261e-25  9.71212566e-21
+   2.50700099e-20  5.44539274e-19  1.86454545e-17  1.45297020e-15
+   1.33430573e-22  1.37479824e-22  9.84446728e-23  9.97724228e-23
+   1.94709841e-23  2.14792962e-23  3.46827391e-24  3.52705503e-24
+   7.51825966e-24  8.05513764e-24  3.01250434e-25  2.97962788e-25
+   4.22713223e-24  1.43266830e-19  1.63502000e-18  5.78155511e-17
+   4.15345765e-15  4.01429417e-22  4.11885570e-22  2.88552987e-22
+   2.89759055e-22  6.61993339e-23  7.31387587e-23  6.18024253e-24
+   6.09656620e-24  2.60848784e-23  2.81342168e-23  9.93723991e-25
+   9.77824669e-25  1.34182512e-23  4.49591622e-17  1.66155303e-15
+   1.08558323e-13  1.10500506e-20  1.13170178e-20  8.08389662e-21
+   8.14129212e-21  1.45638400e-21  1.58959645e-21  2.44551325e-22
+   2.46546663e-22  8.39891803e-22  9.05697398e-22  3.26519447e-23
+   3.22418227e-23  3.92674887e-22  6.61244745e-14  4.29264003e-12
+   4.08815969e-19  4.17868605e-19  2.95706079e-19  2.96932342e-19
+   5.12802683e-20  5.58143629e-20  7.55101537e-21  7.53315405e-21
+   3.78513109e-20  4.08672204e-20  1.33712125e-21  1.32296402e-21
+   1.50901738e-20 -5.28658863e-15  2.66261809e-17  2.72820247e-17
+   1.83622140e-17  1.83963709e-17  4.25957653e-18  4.72170679e-18
+   3.68358727e-19  3.65098769e-19  2.58360385e-18  2.72716918e-18
+   9.34460019e-20  9.33720194e-20  9.58981750e-19  2.71681158e-24
+   2.78060890e-24  1.99107317e-24  2.00439402e-24  3.53545372e-25
+   3.85272718e-25  6.03240610e-26  6.07964433e-26  2.07110314e-25
+   2.23334739e-25  8.07456117e-27  7.96878746e-27  9.66840967e-26
+   2.84957551e-24  2.03087780e-24  2.04612724e-24  3.70645111e-25
+   4.05111208e-25  6.14205623e-26  6.19436882e-26  2.10782154e-25
+   2.27307417e-25  8.17210604e-27  8.07362716e-27  9.87111639e-26
+   1.51557445e-24  1.52678208e-24  2.25714898e-25  2.42076340e-25
+   4.01434546e-26  4.02884157e-26  1.35841746e-25  1.46686648e-25
+   5.65389432e-27  5.54558986e-27  6.81447289e-26  1.53949921e-24
+   2.28391354e-25  2.45193625e-25  4.05067222e-26  4.06905004e-26
+   1.34738394e-25  1.45478580e-25  5.61679316e-27  5.51176904e-27
+   6.83586772e-26  8.57859440e-26  9.78042487e-26  4.18078631e-27
+   4.14999729e-27  2.56684716e-26  2.75557490e-26  8.56095847e-28
+   8.67239011e-28  1.13391764e-26  1.11912957e-25  4.30807725e-27
+   4.27218307e-27  2.79523239e-26  2.99685240e-26  9.02381923e-28
+   9.16969423e-28  1.22293461e-26  9.30551427e-27  9.66277486e-27
+   2.89481010e-27  3.11549022e-27  1.72160789e-28  1.58426833e-28
+   3.62733494e-27  1.00428990e-26  2.81972503e-27  3.03328287e-27
+   1.70767871e-28  1.56821478e-28  3.70476254e-27  3.27900863e-26
+   3.52132882e-26  9.65928808e-28  9.75541416e-28  8.94927094e-27
+   3.79065517e-26  1.04978000e-27  1.05971914e-27  9.71378340e-27
+   5.19867671e-29  5.17342386e-29  3.74494641e-28  5.17066089e-29
+   3.70256095e-28  4.24909098e-27]]
+biases of model:
+[1.11276049e-23]</code></pre>
+</div>
+</div>
+</section>
+<section id="support-vector-machine" class="level3">
+<h3 class="anchored" data-anchor-id="support-vector-machine">Support Vector Machine</h3>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.svm <span class="im">import</span> SVC</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> cross_val_score</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>svc <span class="op">=</span> SVC(gamma <span class="op">=</span> <span class="st">"auto"</span>) </span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>svc.fit(X_train, y_train)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Training Accuracy:"</span>)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(svc.score(X_train, y_train))</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Test accuracy"</span>)</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(svc.score(X_test, y_test))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Training Accuracy:
+0.9463869463869464
+Test accuracy
+0.9054373522458629</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>best_score <span class="op">=</span> <span class="op">-</span>np.inf</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>best_gamma <span class="op">=</span> np.inf</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> gammas <span class="kw">in</span> <span class="dv">6</span><span class="op">**</span>(np.arange(<span class="op">-</span><span class="dv">4</span>,<span class="dv">4</span>, dtype <span class="op">=</span> <span class="bu">float</span>)):</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    svc <span class="op">=</span> SVC(gamma <span class="op">=</span> gammas)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    scores <span class="op">=</span> cross_val_score(svc, X_train, y_train,cv<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> scores.mean()<span class="op">&gt;</span>best_score:</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>        best_score <span class="op">=</span> scores.mean()</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>        best_gamma <span class="op">=</span> gammas</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(best_score, best_gamma)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.9114096573208723 0.027777777777777776</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>svc_model <span class="op">=</span> SVC(gamma <span class="op">=</span> <span class="fl">.027777777777777776</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>svc_model.fit(X_train,y_train)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"training accuracy"</span>)</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(svc_model.score(X_train,y_train))</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"testing"</span>)</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(svc_model.score(X_test,y_test))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>training accuracy
+0.9358974358974359
+testing
+0.9054373522458629</code></pre>
+</div>
+</div>
+</section>
+<section id="decision-tree-classifier" class="level3">
+<h3 class="anchored" data-anchor-id="decision-tree-classifier">Decision Tree Classifier</h3>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeClassifier</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> cross_val_score</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>best_score <span class="op">=</span> <span class="op">-</span>np.inf</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>maximum <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> depth <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">2</span>,<span class="dv">25</span>):</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    tree <span class="op">=</span> DecisionTreeClassifier(max_depth <span class="op">=</span> depth)</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">#scores = cross_val_score(tree, X_train[subset], y_train, cv = 11)</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    scores <span class="op">=</span> cross_val_score(tree, X_train, y_train, cv <span class="op">=</span> <span class="dv">9</span>)</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> scores.mean() <span class="op">&gt;</span> best_score:</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>        best_score <span class="op">=</span> scores.mean()</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>        maximum <span class="op">=</span> depth</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(best_score, maximum)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.898525828460039 5</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>tree <span class="op">=</span> DecisionTreeClassifier(max_depth <span class="op">=</span> <span class="dv">5</span>)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>tree.fit(X_train,y_train)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"training"</span>)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tree.score(X_train,y_train))</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"testing"</span>)</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tree.score(X_test,y_test))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>training
+0.9335664335664335
+testing
+0.900709219858156</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="part-4-visualization-of-data" class="level2">
+<h2 class="anchored" data-anchor-id="part-4-visualization-of-data">Part 4: Visualization of Data</h2>
+<p>First, let’s explore our data a bit by visualizing the AQI, Median Income, and some racial demographics using maps. (might want this at the begninng of the blog post)</p>
+<div class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"pollution_income_race.csv"</span>)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.dropna()</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> geomapping <span class="im">import</span> Mapping</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>mp <span class="op">=</span> Mapping()</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>mp.plot_df(df,<span class="st">"AQI Total"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<iframe scrolling="no" width="100%" height="545px" src="iframe_figures/figure_19.html" frameborder="0" allowfullscreen=""></iframe>
+</div>
+</div>
+<div class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>mp.plot_df(df, <span class="st">"Median Household Income"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<iframe scrolling="no" width="100%" height="545px" src="iframe_figures/figure_20.html" frameborder="0" allowfullscreen=""></iframe>
+</div>
+</div>
+<div class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>mp.plot_df(df, <span class="st">"black_alone_percent"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<iframe scrolling="no" width="100%" height="545px" src="iframe_figures/figure_21.html" frameborder="0" allowfullscreen=""></iframe>
+</div>
+</div>
+</section>
+<section id="our-testing-data" class="level2">
+<h2 class="anchored" data-anchor-id="our-testing-data">Our testing data</h2>
+<p>Next, let’s visualize our binary predictions compared to the actual AQI (want to label these, zoom, etc)</p>
+<div class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co">#creating dataframe with test data, labels, and predictions</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> copy <span class="im">import</span> deepcopy</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>test_combined <span class="op">=</span> deepcopy(X_test)</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>test_combined[<span class="st">"Predicted AQI Binary"</span>] <span class="op">=</span> svc_model.predict(X_test)</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>test_combined[<span class="st">"Actual AQI Binary"</span>] <span class="op">=</span> y_test</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>X_test.head()</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="co">#plotting predictions</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>mp.plot_df(test_combined, <span class="st">"Predicted AQI Binary"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<iframe scrolling="no" width="100%" height="545px" src="iframe_figures/figure_22.html" frameborder="0" allowfullscreen=""></iframe>
+</div>
+</div>
+<div class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># #plotting actual </span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>mp.plot_df(test_combined, <span class="st">"Actual AQI Binary"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<iframe scrolling="no" width="100%" height="545px" src="iframe_figures/figure_23.html" frameborder="0" allowfullscreen=""></iframe>
+</div>
+</div>
+</section>
+<section id="part-5-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="part-5-analysis">Part 5: Analysis</h2>
+<p>The overall accuracy of the model was 0.9054373522458629</p>
+<p>To find the <strong>PPV</strong> of our model we first need to calculate the number of true positives and false positives. To do so, we compare the predicted labels to the test labels. If the predicted label is 1 and the acutal label is 1, then that is a true positive. If the predicted label is 1 and the true label is 0 that is a false positive.</p>
+<div class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>TP <span class="op">=</span> <span class="bu">len</span>((np.where((test_combined[<span class="st">"Predicted AQI Binary"</span>]<span class="op">==</span><span class="dv">1</span>) <span class="op">&amp;</span> (test_combined[<span class="st">"Actual AQI Binary"</span>]<span class="op">==</span><span class="dv">1</span>))[<span class="dv">0</span>]))</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>FP <span class="op">=</span> <span class="bu">len</span>((np.where((test_combined[<span class="st">"Predicted AQI Binary"</span>]<span class="op">==</span><span class="dv">1</span>) <span class="op">&amp;</span> (test_combined[<span class="st">"Actual AQI Binary"</span>]<span class="op">==</span><span class="dv">0</span>))[<span class="dv">0</span>]))</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>PPV <span class="op">=</span> <span class="bu">round</span>((TP)<span class="op">/</span>(TP<span class="op">+</span>FP),<span class="dv">4</span>)</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The positive predictive value of this model is: "</span> <span class="op">+</span> <span class="bu">str</span>(PPV))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The positive predictive value of this model is: 0.9112</code></pre>
+</div>
+</div>
+<p>The <strong>FPR</strong> represents the rate at which a test label of 0 is incorrectly predicted to be 1; or, when a high risk county is predicted to be a low risk count.</p>
+<p>The <strong>FNR</strong> represents the rate at which a test label of 1 is incorrectly predicted to be 0.</p>
+<div class="cell" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> confusion_matrix</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>conf_matrix <span class="op">=</span> confusion_matrix(test_combined[<span class="st">"Actual AQI Binary"</span>],test_combined[<span class="st">"Predicted AQI Binary"</span>], normalize <span class="op">=</span> <span class="st">'true'</span>)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"FPR = "</span> <span class="op">+</span> <span class="bu">str</span>(conf_matrix[<span class="dv">0</span>][<span class="dv">1</span>]))</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"FNR = "</span> <span class="op">+</span> <span class="bu">str</span>(conf_matrix[<span class="dv">1</span>][<span class="dv">0</span>])) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>FPR = 0.5932203389830508
+FNR = 0.013736263736263736</code></pre>
+</div>
+</div>
+</section>
+<section id="by-group-metrics-income" class="level2">
+<h2 class="anchored" data-anchor-id="by-group-metrics-income">By Group Metrics: Income</h2>
+<p>First we will divide the data set into high income and low income counties. Counties where the median household incomw is more than $73,125 (mean) will be marked as high income (1) and under this threshold will be marked a lower income (0)</p>
+<div class="cell" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>test_combined.loc[test_combined[<span class="st">"Median Household Income"</span>] <span class="op">&lt;=</span><span class="dv">73125</span>,<span class="st">"High Income"</span>]<span class="op">=</span><span class="dv">0</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>test_combined.loc[test_combined[<span class="st">"Median Household Income"</span>] <span class="op">&gt;</span><span class="dv">73125</span>,<span class="st">"High Income"</span>]<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>medIncome <span class="op">=</span> test_combined[<span class="st">"High Income"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The accuracy for high income counties is "</span> <span class="op">+</span> <span class="bu">str</span>((test_combined[<span class="st">"Predicted AQI Binary"</span>]<span class="op">==</span>test_combined[<span class="st">"Actual AQI Binary"</span>])[medIncome<span class="op">==</span><span class="dv">1</span>].mean().<span class="bu">round</span>(<span class="dv">4</span>)))</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The accuracy for low income counties is "</span> <span class="op">+</span> <span class="bu">str</span>((test_combined[<span class="st">"Predicted AQI Binary"</span>]<span class="op">==</span>test_combined[<span class="st">"Actual AQI Binary"</span>])[medIncome<span class="op">==</span><span class="dv">0</span>].mean().<span class="bu">round</span>(<span class="dv">4</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The accuracy for high income counties is 0.9653
+The accuracy for low income counties is 0.864</code></pre>
+</div>
+</div>
+<p>Now we will compare some of the accuracy metrics such as the false positive rate and the false negative rate. Ideally, the values for each group will be about equal.</p>
+<div class="cell" data-execution_count="29">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>conf_matrix_high_norm <span class="op">=</span> confusion_matrix(test_combined[<span class="st">"Actual AQI Binary"</span>][medIncome<span class="op">==</span><span class="dv">1</span>],test_combined[<span class="st">"Predicted AQI Binary"</span>][medIncome<span class="op">==</span><span class="dv">1</span>], normalize <span class="op">=</span> <span class="st">'true'</span>)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"FPR for high income counties = "</span> <span class="op">+</span> <span class="bu">str</span>(conf_matrix_high_norm[<span class="dv">0</span>][<span class="dv">1</span>].<span class="bu">round</span>(<span class="dv">4</span>) <span class="op">*</span> <span class="dv">100</span>))</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"FNR for high income counties = "</span> <span class="op">+</span> <span class="bu">str</span>(conf_matrix_high_norm[<span class="dv">1</span>][<span class="dv">0</span>].<span class="bu">round</span>(<span class="dv">4</span>) <span class="op">*</span><span class="dv">100</span>)) </span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>conf_matrix_low_norm <span class="op">=</span> confusion_matrix(test_combined[<span class="st">"Actual AQI Binary"</span>][medIncome<span class="op">==</span><span class="dv">0</span>],test_combined[<span class="st">"Predicted AQI Binary"</span>][medIncome<span class="op">==</span><span class="dv">0</span>], normalize <span class="op">=</span> <span class="st">'true'</span>)</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"FPR for low income counties = "</span> <span class="op">+</span> <span class="bu">str</span>(conf_matrix_low_norm[<span class="dv">0</span>][<span class="dv">1</span>].<span class="bu">round</span>(<span class="dv">4</span>) <span class="op">*</span><span class="dv">100</span>))</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"FNR for low income counties = "</span> <span class="op">+</span> <span class="bu">str</span>(conf_matrix_low_norm[<span class="dv">1</span>][<span class="dv">0</span>].<span class="bu">round</span>(<span class="dv">4</span>) <span class="op">*</span><span class="dv">100</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>FPR for high income counties = 50.0
+FNR for high income counties = 0.61
+FPR for low income counties = 61.22
+FNR for low income counties = 1.9900000000000002</code></pre>
+</div>
+</div>
+</section>
+<section id="bias-measures-for-income" class="level2">
+<h2 class="anchored" data-anchor-id="bias-measures-for-income">Bias measures for income</h2>
+<p><strong>Calibration</strong> means that the fraction of predicted counties to have a AQI binary score of 1 (low risk) is the same across all income groups. So we will calculate this metric for both income groups. This metric can be calculated by dividing the number of true positives by the total number of predicted positives.</p>
+<div class="cell" data-execution_count="31">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>high_income_calibration <span class="op">=</span> confusion_matrix(test_combined[<span class="st">"Actual AQI Binary"</span>][medIncome<span class="op">==</span><span class="dv">1</span>],test_combined[<span class="st">"Predicted AQI Binary"</span>][medIncome<span class="op">==</span><span class="dv">1</span>])[<span class="dv">0</span>][<span class="dv">0</span>]<span class="op">/</span>(confusion_matrix(test_combined[<span class="st">"Actual AQI Binary"</span>][medIncome<span class="op">==</span><span class="dv">1</span>],test_combined[<span class="st">"Predicted AQI Binary"</span>][medIncome<span class="op">==</span><span class="dv">1</span>])[<span class="dv">0</span>].<span class="bu">sum</span>())</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>low_income_calibration <span class="op">=</span> confusion_matrix(test_combined[<span class="st">"Actual AQI Binary"</span>][medIncome<span class="op">==</span><span class="dv">0</span>],test_combined[<span class="st">"Predicted AQI Binary"</span>][medIncome<span class="op">==</span><span class="dv">0</span>])[<span class="dv">0</span>][<span class="dv">0</span>]<span class="op">/</span>(confusion_matrix(test_combined[<span class="st">"Actual AQI Binary"</span>][medIncome<span class="op">==</span><span class="dv">0</span>],test_combined[<span class="st">"Predicted AQI Binary"</span>][medIncome<span class="op">==</span><span class="dv">0</span>])[<span class="dv">0</span>].<span class="bu">sum</span>())</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The percentage of high income counties predicted to have a low risk AQI who actually had a low risk AQI is "</span> <span class="op">+</span> <span class="bu">str</span>(high_income_calibration.<span class="bu">round</span>(<span class="dv">4</span>)<span class="op">*</span><span class="dv">100</span>))</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The percentage of low income counties predicted to have a low risk AQI who actually had a low risk AQI is "</span> <span class="op">+</span> <span class="bu">str</span>(low_income_calibration.<span class="bu">round</span>(<span class="dv">4</span>)<span class="op">*</span><span class="dv">100</span>))</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The percentage of high income counties predicted to have a low risk AQI who actually had a low risk AQI is 50.0
+The percentage of low income counties predicted to have a low risk AQI who actually had a low risk AQI is 38.78</code></pre>
+</div>
+</div>
+<p>This model is not calibrated as the percentages are very different. There is a 11.2% difference</p>
+<p>A model <strong>satisfies error rate balance</strong> if the false positive and false negative rates are equal across groups. Looking at the previously calculated FPR anf FNR, I would say that this model does not satisfy error rate balance. The FPR for high income counties is 50%, while the FPR for low income counties is 61.22%. The difference between the two rates is 10.1%. In general, the high FPR may stem from a lack of positive observation in the training data itself.</p>
+<p>A model satisifes <strong>statistical parity</strong> if the proportion of counties classified as having a low risk AQI is the same for each group. So we compare the total number of predicted positives.</p>
+<div class="cell" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The proportion of low income counties classified as having a low risk AQI is "</span> <span class="op">+</span> <span class="bu">str</span>((confusion_matrix(test_combined[<span class="st">"Actual AQI Binary"</span>][medIncome<span class="op">==</span><span class="dv">0</span>],test_combined[<span class="st">"Actual AQI Binary"</span>][medIncome<span class="op">==</span><span class="dv">0</span>])[<span class="dv">0</span>].<span class="bu">sum</span>())<span class="op">/</span>(medIncome<span class="op">==</span><span class="dv">0</span>).<span class="bu">sum</span>()))</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The proportion of high income counties classified as having a low risk AQI is "</span> <span class="op">+</span> <span class="bu">str</span>((confusion_matrix(test_combined[<span class="st">"Actual AQI Binary"</span>][medIncome<span class="op">==</span><span class="dv">1</span>],test_combined[<span class="st">"Actual AQI Binary"</span>][medIncome<span class="op">==</span><span class="dv">1</span>])[<span class="dv">0</span>].<span class="bu">sum</span>())<span class="op">/</span>(medIncome<span class="op">==</span><span class="dv">1</span>).<span class="bu">sum</span>()))</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The proportion of low income counties classified as having a low risk AQI is 0.196
+The proportion of high income counties classified as having a low risk AQI is 0.057803468208092484</code></pre>
+</div>
+</div>
+<p>This model does not satisfy statistical parity. The proportion of counties predictied to have a low risk AQI is not the same for low and high income areas. The is a 14% difference between the two groups.</p>
+</section>
+<section id="by-group-measures-race" class="level2">
+<h2 class="anchored" data-anchor-id="by-group-measures-race">By Group Measures: Race</h2>
+<p>The data set will first be split into two halves. One set of counties is designated (1), where white people make up the majority of its residents. Additionally, counties without a significant white majority are denoted with a 0.</p>
+<div class="cell" data-execution_count="34">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>test_combined.loc[(test_combined[<span class="st">"White Alone (M) %"</span>]<span class="op">+</span>test_combined[<span class="st">"White Alone (F) %"</span>])<span class="op">&lt;=</span><span class="fl">.50</span>,<span class="st">"Majority White"</span>]<span class="op">=</span><span class="dv">0</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>test_combined.loc[(test_combined[<span class="st">"White Alone (M) %"</span>]<span class="op">+</span>test_combined[<span class="st">"White Alone (F) %"</span>])<span class="op">&gt;</span><span class="fl">.50</span>,<span class="st">"Majority White"</span>]<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>majority_white <span class="op">=</span> test_combined[<span class="st">"Majority White"</span>]</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>                                                 </span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>                                                 </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="35">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The accuracy for counties with a white majority population is "</span> <span class="op">+</span> <span class="bu">str</span>((test_combined[<span class="st">"Predicted AQI Binary"</span>]<span class="op">==</span>test_combined[<span class="st">"Actual AQI Binary"</span>])[majority_white<span class="op">==</span><span class="dv">1</span>].mean().<span class="bu">round</span>(<span class="dv">4</span>)))</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The accuracy for counties without a white majority population is "</span> <span class="op">+</span> <span class="bu">str</span>((test_combined[<span class="st">"Predicted AQI Binary"</span>]<span class="op">==</span>test_combined[<span class="st">"Actual AQI Binary"</span>])[majority_white<span class="op">==</span><span class="dv">0</span>].mean().<span class="bu">round</span>(<span class="dv">4</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The accuracy for counties with a white majority population is 0.9122
+The accuracy for counties without a white majority population is 0.8511</code></pre>
+</div>
+</div>
+<p>Now we will compare some of the accuracy metrics such as the false positive rate and the false negative rate. Ideally the metrics will be about equal across the different demographic groups</p>
+<div class="cell" data-execution_count="36">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>conf_matrix_major_white_norm <span class="op">=</span> confusion_matrix(test_combined[<span class="st">"Actual AQI Binary"</span>][majority_white<span class="op">==</span><span class="dv">1</span>],test_combined[<span class="st">"Predicted AQI Binary"</span>][majority_white<span class="op">==</span><span class="dv">1</span>], normalize <span class="op">=</span> <span class="st">'true'</span>)</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"FPR for counties with a majority white population = "</span> <span class="op">+</span> <span class="bu">str</span>(conf_matrix_major_white_norm[<span class="dv">0</span>][<span class="dv">1</span>].<span class="bu">round</span>(<span class="dv">4</span>) ))</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"FNR for counties with a majority white population = "</span> <span class="op">+</span> <span class="bu">str</span>(conf_matrix_major_white_norm[<span class="dv">1</span>][<span class="dv">0</span>].<span class="bu">round</span>(<span class="dv">4</span>))) </span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>conf_matrix_nonmajor_white_norm <span class="op">=</span> confusion_matrix(test_combined[<span class="st">"Actual AQI Binary"</span>][majority_white<span class="op">==</span><span class="dv">0</span>],test_combined[<span class="st">"Predicted AQI Binary"</span>][majority_white<span class="op">==</span><span class="dv">0</span>], normalize <span class="op">=</span> <span class="st">'true'</span>)</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"FPR for counties without a majority white population = "</span> <span class="op">+</span> <span class="bu">str</span>(conf_matrix_low_norm[<span class="dv">0</span>][<span class="dv">1</span>].<span class="bu">round</span>(<span class="dv">4</span>)))</span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"FNR for counties without a majority white population = "</span> <span class="op">+</span> <span class="bu">str</span>(conf_matrix_low_norm[<span class="dv">1</span>][<span class="dv">0</span>].<span class="bu">round</span>(<span class="dv">4</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>FPR for counties with a majority white population = 0.58
+FNR for counties with a majority white population = 0.0123
+FPR for counties without a majority white population = 0.6122
+FNR for counties without a majority white population = 0.0199</code></pre>
+</div>
+</div>
+</section>
+<section id="bias-measures-for-race" class="level2">
+<h2 class="anchored" data-anchor-id="bias-measures-for-race">Bias measures for race</h2>
+<p><strong>Calibration</strong> means that the fraction of predicted counties to have a AQI binary score of 1 (low risk) is the same across all demographic groups. So we will calculate this metric for both demographics groups. This metric can be calculated by dividing the number of true positives by the total number of predicted positives.</p>
+<div class="cell" data-execution_count="38">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>majority_calibration <span class="op">=</span> confusion_matrix(test_combined[<span class="st">"Actual AQI Binary"</span>][majority_white<span class="op">==</span><span class="dv">1</span>],test_combined[<span class="st">"Predicted AQI Binary"</span>][majority_white<span class="op">==</span><span class="dv">1</span>])[<span class="dv">0</span>][<span class="dv">0</span>]<span class="op">/</span>(confusion_matrix(test_combined[<span class="st">"Actual AQI Binary"</span>][majority_white<span class="op">==</span><span class="dv">1</span>],test_combined[<span class="st">"Predicted AQI Binary"</span>][majority_white<span class="op">==</span><span class="dv">1</span>])[<span class="dv">0</span>].<span class="bu">sum</span>())</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>nonmajority_calibration <span class="op">=</span> confusion_matrix(test_combined[<span class="st">"Actual AQI Binary"</span>][majority_white<span class="op">==</span><span class="dv">0</span>],test_combined[<span class="st">"Predicted AQI Binary"</span>][majority_white<span class="op">==</span><span class="dv">0</span>])[<span class="dv">0</span>][<span class="dv">0</span>]<span class="op">/</span>(confusion_matrix(test_combined[<span class="st">"Actual AQI Binary"</span>][majority_white<span class="op">==</span><span class="dv">0</span>],test_combined[<span class="st">"Predicted AQI Binary"</span>][majority_white<span class="op">==</span><span class="dv">0</span>])[<span class="dv">0</span>].<span class="bu">sum</span>())</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The percentage of counties without a majority white population predicted have a low risk AQI who actually had a low risk AQI is "</span> <span class="op">+</span> <span class="bu">str</span>(nonmajority_calibration.<span class="bu">round</span>(<span class="dv">4</span>)<span class="op">*</span><span class="dv">100</span>))</span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The percentage of counties with a majority white population predicted have a low risk AQI who actually had a low risk AQI is "</span> <span class="op">+</span> <span class="bu">str</span>(majority_calibration.<span class="bu">round</span>(<span class="dv">4</span>)<span class="op">*</span><span class="dv">100</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The percentage of counties without a majority white population predicted have a low risk AQI who actually had a low risk AQI is 33.33
+The percentage of counties with a majority white population predicted have a low risk AQI who actually had a low risk AQI is 42.0</code></pre>
+</div>
+</div>
+<p>This model is not calibrated as the percentages are very different. There is a 9% difference</p>
+<p>A model satisfies <strong>error rate balance</strong> if the false positive and false negative rates are equal across groups. Looking at the previously calculated FPR anf FNR, I would say that this model does not satisfy error rate balance. The FPR for counties with a majority white population is 58%, while the FPR for counties without a majority white population is 61%.</p>
+<p>A model satisifes <strong>statistical parity</strong> if the proportion of counties classified as having a low risk AQI is the same for each group. So we compare the total number of predicted positives.</p>
+<div class="cell" data-execution_count="39">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The proportion of counties with a majority white population classified as having a low risk AQI is "</span> <span class="op">+</span> <span class="bu">str</span>((confusion_matrix(test_combined[<span class="st">"Actual AQI Binary"</span>][majority_white<span class="op">==</span><span class="dv">1</span>],test_combined[<span class="st">"Actual AQI Binary"</span>][majority_white<span class="op">==</span><span class="dv">1</span>])[<span class="dv">0</span>].<span class="bu">sum</span>())<span class="op">/</span>(majority_white<span class="op">==</span><span class="dv">1</span>).<span class="bu">sum</span>()))</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The proportion of counties without a majority white population classified as having a low risk AQI is "</span> <span class="op">+</span> <span class="bu">str</span>((confusion_matrix(test_combined[<span class="st">"Actual AQI Binary"</span>][majority_white<span class="op">==</span><span class="dv">0</span>],test_combined[<span class="st">"Actual AQI Binary"</span>][majority_white<span class="op">==</span><span class="dv">0</span>])[<span class="dv">0</span>].<span class="bu">sum</span>())<span class="op">/</span>(majority_white<span class="op">==</span><span class="dv">0</span>).<span class="bu">sum</span>()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The proportion of counties with a majority white population classified as having a low risk AQI is 0.13297872340425532
+The proportion of counties without a majority white population classified as having a low risk AQI is 0.19148936170212766</code></pre>
+</div>
+</div>
+<p>These values are roughly the same, so I would say that this model satisfies statistical parity.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
